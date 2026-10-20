@@ -1,0 +1,23 @@
+<header class="p-3 text-bg-dark">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      
+      <!-- UBAH BAGIAN LOGO DI SINI -->
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none fw-bold">
+        SiPinjam
+      </a>
+
+      <!-- UBAH BAGIAN MENU DI SINI -->
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 ms-lg-3">
+        <li><a href="#" class="nav-link px-2 text-white">Beranda</a></li>
+        <li><a href="#" class="nav-link px-2 text-white">Daftar Alat</a></li>
+      </ul>
+
+      <!-- UBAH BAGIAN TOMBOL MASUK DI SINI -->
+      <div class="text-end">
+        <button type="button" class="btn btn-outline-light me-2">Masuk</button>
+      </div>
+
+    </div>
+  </div>
+</header>
