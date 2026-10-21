@@ -2,6 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Models\Category;
+use App\Models\Item;
+use App\Models\Loan;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\LoanController;
+
+
+
+
+
 Route::get('/', function () {
     return view('homepage');
 })->name('home');
@@ -39,27 +52,43 @@ Route::get('/latihan-blade', function () {
  ]);
 });
 
-Route::get('/alat', function () {
-    $alat = [
-        ['kode' => 'ALT-0001', 'nama' => 'Multimeter Digital', 'kategori' => 'Alat Ukur', 'stok' => 5],
-        ['kode' => 'ALT-0002', 'nama' => 'Osiloskop', 'kategori' => 'Alat Ukur', 'stok' => 0],
-        ['kode' => 'ALT-0003', 'nama' => 'Solder 40 Watt', 'kategori' => 'Alat Solder', 'stok' => 8],
-        ['kode' => 'ALT-0004', 'nama' => 'Arduino Uno', 'kategori' => 'Mikrokontroler', 'stok' => 12],
-        ['kode' => 'ALT-0005', 'nama' => 'Tang Potong', 'kategori' => 'Perkakas', 'stok' => 3],
-        // Tambahan 2 alat baru (1 alat dengan stok 0 agar tampil merah)
-        ['kode' => 'ALT-0006', 'nama' => 'Power Supply DC', 'kategori' => 'Alat Ukur', 'stok' => 0],
-        ['kode' => 'ALT-0007', 'nama' => 'Breadboard', 'kategori' => 'Aksesoris', 'stok' => 25],
-    ];
+Route::resource('alat', ItemController::class)->except('show');
 
-    // Mengirim nama mahasiswa ke view untuk judul
-    return view('alat', [
-        'alat' => $alat,
-        'namamahasiswa' => 'Budi Santoso' 
-    ]);
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::resource('kategori', CategoryController::class)->except('show');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/daftar', [AuthController::class, 'showRegister'])->name('daftar');
+    Route::post('/daftar', [AuthController::class, 'register']);
 });
 
-Route::get('/dashboard', function () {
- return view('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+  
+    Route::middleware('admin')->group(function () {
+        Route::resource('kategori', CategoryController::class)->except('show');
+        Route::resource('alat', ItemController::class)->except(['index', 'show']);
+    });
+
+    
+    Route::get('/alat', [ItemController::class, 'index'])->name('alat.index');
 });
+
+Route::patch('/peminjaman/{peminjaman}/kembali', [LoanController::class,
+'kembalikan'])->name('peminjaman.kembali');
+
+Route::resource('peminjaman', LoanController::class)->only(['index', 'create',
+'store']);
+
+
+
+
 
 

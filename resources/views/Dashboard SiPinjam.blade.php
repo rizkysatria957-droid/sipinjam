@@ -11,7 +11,7 @@
         <div class="card border-primary shadow-sm">
             <div class="card-body">
                 <div class="text-muted">Jenis Alat</div>
-                <div class="fs-2 fw-bold text-primary">5</div>
+                <div class="fs-2 fw-bold text-primary">{{ $jumlahAlat }}</div>
             </div>
         </div>
     </div>
@@ -21,7 +21,7 @@
         <div class="card border-success shadow-sm">
             <div class="card-body">
                 <div class="text-muted">Kategori</div>
-                <div class="fs-2 fw-bold text-success">4</div>
+                <div class="fs-2 fw-bold text-success">{{ $jumlahKategori }}</div>
             </div>
         </div>
     </div>
